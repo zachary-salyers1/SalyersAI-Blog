@@ -16,13 +16,25 @@ export const revalidate = 300;
 export default async function BlogPage() {
   const posts = await cms.posts.list();
   const { data: categories } = await cms.categories.list();
+
+  if (!posts.data || posts.data.length === 0) {
+    return (
+      <div className="p-4 space-y-12">
+        <div>
+          <h1 className="md:text-3xl text-2xl font-bold mt-12">Blog</h1>
+          <p className="text-slate-500 text-lg mt-2">No posts available yet.</p>
+        </div>
+      </div>
+    );
+  }
+
   const lastPost = posts.data[posts.data.length - 1];
   const postsWithoutLast = posts.data.slice(0, -1);
 
   return (
     <div className="p-4 space-y-12">
       <div>
-        <h1 className="md:text-3xl text-2xl font-bold mt-12">Blog</h1>
+        <h1 className="md:text-3xl text-2xl font-bold mt-12">Tutorials</h1>
         <p className="text-slate-500 text-lg mt-2">
           Stay up to date with the latest news and updates from the team!
         </p>
